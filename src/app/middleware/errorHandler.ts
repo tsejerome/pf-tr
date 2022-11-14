@@ -3,7 +3,6 @@ module.exports = () => {
     try {
       await next();
     } catch (err) {
-      console.log('catch error:', err);
       switch (err.status) {
         case 400:
           ctx.body = { code: 400, message: 'Bad Request' };
