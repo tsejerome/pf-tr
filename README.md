@@ -38,3 +38,8 @@ $ npm run production
 
 
 [midway]: https://midwayjs.org
+
+### Things for improvement
+- [ ] Unit Testing with jest
+- [ ] typeorm migration script is not able to execute (at least on Mac M1) due to an ongoing but weird bug called `MissingDriverError: Wrong driver: "undefined" given.`. The code is ready though. Link: https://github.com/typeorm/typeorm/issues/4068
+- [ ] docker setup for local development is not suggested as midway.js does not refresh like nodemon during development on docker. It does refresh using `npm run dev` though
