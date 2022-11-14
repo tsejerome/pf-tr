@@ -1,0 +1,70 @@
+# Freehunter's Docker compose for ONLY development
+
+version: '3.3'
+
+services:
+  db:
+    build: ./Docker/mysql
+    volumes:
+      - db_data:/var/lib/mysql:cached
+      - ./Docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:cached
+    restart: on-failure
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - shared_net
+
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+  backend:
+    # TODO: midway does not restart on code change in docker
+    build:
+      context: ./
+      dockerfile: Dockerfile.development
+      args:
+        - NB_USER=appuser
+        - NB_UID=1001
+        - NB_GID=101
+    image: pf-interview/pf-backend:staging
+    
+    links:
+      - db
+    ports:
+      - "8000:80"
+    restart: on-failure
+    environment:
+      - MYSQL_DATABASE=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+
+    networks:
+      # - default
+      - shared_net
+
+  myadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: on-failure
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8001:80"
+    links:
+      - db
+      
+volumes:
+  db_data:
+
+networks:
+  shared_net:

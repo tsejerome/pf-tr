@@ -1,0 +1,11 @@
+FROM node:14
+
+WORKDIR /home
+
+COPY . .
+
+RUN npm i --save
+
+EXPOSE 7001
+
+CMD ["npm", "run", "dev"]
