@@ -1,30 +1,40 @@
-# my-midway-project
+# pf-trade
 
 ## QuickStart
 
-<!-- add docs here for user -->
-
 see [midway docs][midway] for more detail.
 
-### Development
-
+### One Off Migration Script
+Note: Will need to make sure the mysql driver exists, e.g. running `npm run start-database` first
 ```bash
 $ npm i
-$ npm run dev
-$ open http://localhost:7001/
+$ npm run init-database
 ```
 
-### Deploy
-
+### Development
+#### Node
+1. Installing Mysql drive at https://www.mysql.com/downloads/
+2. ```bash 
+    $ npm run start-database
+    $ npm run i
+    $ npm run dev
+    ```
+#### WIP: Docker
 ```bash
-$ npm start
-$ npm stop
+$ docker-compose up
+```
+http://localhost:7001/ will be the server route
+
+### Deploy
+#### Node
+```bash
+$ npm run production
 ```
 
 ### npm scripts
 
 - Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
+- WIP: Use `npm test` to run unit test.
 
 
 [midway]: https://midwayjs.org
